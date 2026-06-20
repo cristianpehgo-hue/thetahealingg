@@ -1,0 +1,1402 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Entrena Tu Espíritu – Ana Paola</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Inter:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --deep: #1a0a2e;
+    --violet: #3d1a6e;
+    --amethyst: #7b3fa0;
+    --lavender: #c084f5;
+    --blush: #f0c4e8;
+    --gold: #d4a843;
+    --cream: #fdf6ff;
+    --white: #ffffff;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--deep);
+    color: var(--white);
+    overflow-x: hidden;
+  }
+
+
+  /* CANVAS BG */
+  #bg-canvas {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 24px 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    backdrop-filter: blur(12px);
+    background: rgba(26, 10, 46, 0.4);
+    border-bottom: 1px solid rgba(192, 132, 245, 0.15);
+  }
+
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    font-weight: 300;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--lavender);
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 8px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    display: block;
+    padding: 8px 20px;
+    border-radius: 100px;
+    border: 1px solid rgba(192, 132, 245, 0.3);
+    color: var(--blush);
+    text-decoration: none;
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(8px);
+    background: rgba(61, 26, 110, 0.3);
+  }
+
+  .nav-links a:hover {
+    background: rgba(192, 132, 245, 0.2);
+    border-color: var(--lavender);
+    color: var(--white);
+    transform: translateY(-1px);
+  }
+
+  .nav-cta {
+    background: var(--amethyst) !important;
+    border-color: var(--amethyst) !important;
+    color: var(--white) !important;
+  }
+
+  /* HERO */
+  .hero {
+    position: relative;
+    z-index: 1;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 120px 48px 80px;
+    overflow: hidden;
+  }
+
+  .hero-texture {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 70% at 70% 50%, rgba(123, 63, 160, 0.35) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 50% at 20% 80%, rgba(61, 26, 110, 0.5) 0%, transparent 60%),
+      radial-gradient(ellipse 30% 40% at 85% 15%, rgba(212, 168, 67, 0.08) 0%, transparent 50%);
+    z-index: 0;
+  }
+
+  /* Decorative botanical SVG overlay */
+  .hero-botanical {
+    position: absolute;
+    right: -40px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 55%;
+    height: 100%;
+    z-index: 1;
+    opacity: 0.12;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 600'%3E%3Cg fill='none' stroke='%23c084f5' stroke-width='1'%3E%3Ccircle cx='300' cy='300' r='250'/%3E%3Ccircle cx='300' cy='300' r='200'/%3E%3Ccircle cx='300' cy='300' r='150'/%3E%3Ccircle cx='300' cy='300' r='100'/%3E%3Cline x1='50' y1='300' x2='550' y2='300'/%3E%3Cline x1='300' y1='50' x2='300' y2='550'/%3E%3Cline x1='120' y1='120' x2='480' y2='480'/%3E%3Cline x1='480' y1='120' x2='120' y2='480'/%3E%3Cellipse cx='300' cy='300' rx='250' ry='120' transform='rotate(30 300 300)'/%3E%3Cellipse cx='300' cy='300' rx='250' ry='120' transform='rotate(60 300 300)'/%3E%3Cellipse cx='300' cy='300' rx='250' ry='120' transform='rotate(90 300 300)'/%3E%3C/g%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 620px;
+  }
+
+  .hero-eyebrow {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .hero-eyebrow::before {
+    content: '';
+    display: block;
+    width: 32px;
+    height: 1px;
+    background: var(--gold);
+  }
+
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3.5rem, 7vw, 6.5rem);
+    font-weight: 900;
+    line-height: 0.9;
+    letter-spacing: -0.02em;
+    color: var(--white);
+    margin-bottom: 8px;
+  }
+
+  .hero-title em {
+    font-style: italic;
+    color: var(--lavender);
+    display: block;
+  }
+
+  .hero-subtitle {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--blush);
+    margin-bottom: 28px;
+    letter-spacing: 0.05em;
+  }
+
+  .hero-desc {
+    font-size: 0.95rem;
+    font-weight: 300;
+    line-height: 1.75;
+    color: rgba(255,255,255,0.65);
+    max-width: 460px;
+    margin-bottom: 44px;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .btn-primary {
+    padding: 16px 36px;
+    background: linear-gradient(135deg, var(--amethyst), var(--violet));
+    border: none;
+    border-radius: 100px;
+    color: var(--white);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    text-decoration: none;
+    display: inline-block;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 8px 32px rgba(123, 63, 160, 0.4);
+  }
+
+  .btn-primary::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, var(--lavender), var(--amethyst));
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 16px 48px rgba(123, 63, 160, 0.5);
+  }
+
+  .btn-primary:hover::before { opacity: 1; }
+  .btn-primary span { position: relative; z-index: 1; }
+
+  .btn-ghost {
+    padding: 16px 32px;
+    background: transparent;
+    border: 1px solid rgba(192, 132, 245, 0.4);
+    border-radius: 100px;
+    color: var(--lavender);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    text-decoration: none;
+    display: inline-block;
+    transition: all 0.3s ease;
+  }
+
+  .btn-ghost:hover {
+    background: rgba(192, 132, 245, 0.1);
+    border-color: var(--lavender);
+    color: var(--white);
+    transform: translateY(-3px);
+  }
+
+  /* FLOATING ORBS / PRODUCT */
+  .hero-visual {
+    position: absolute;
+    right: 5%;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 3;
+    width: 420px;
+    height: 420px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .orb-container {
+    position: relative;
+    width: 320px;
+    height: 320px;
+    animation: float 6s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    33% { transform: translateY(-18px) rotate(1deg); }
+    66% { transform: translateY(-8px) rotate(-1deg); }
+  }
+
+  .orb-main {
+    width: 320px;
+    height: 320px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 35%,
+      rgba(212, 168, 67, 0.15) 0%,
+      rgba(192, 132, 245, 0.3) 30%,
+      rgba(123, 63, 160, 0.6) 60%,
+      rgba(61, 26, 110, 0.9) 100%
+    );
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    box-shadow:
+      0 0 80px rgba(192, 132, 245, 0.25),
+      0 0 160px rgba(123, 63, 160, 0.15),
+      inset 0 0 60px rgba(212, 168, 67, 0.05);
+    border: 1px solid rgba(192, 132, 245, 0.3);
+  }
+
+  .orb-inner-text {
+    text-align: center;
+    padding: 20px;
+  }
+
+  .orb-theta {
+    font-family: 'Playfair Display', serif;
+    font-size: 4.5rem;
+    font-weight: 900;
+    font-style: italic;
+    color: var(--lavender);
+    line-height: 1;
+    display: block;
+    text-shadow: 0 0 40px rgba(192, 132, 245, 0.6);
+    animation: pulse-glow 3s ease-in-out infinite;
+  }
+
+  @keyframes pulse-glow {
+    0%, 100% { text-shadow: 0 0 40px rgba(192, 132, 245, 0.6); }
+    50% { text-shadow: 0 0 80px rgba(192, 132, 245, 0.9), 0 0 120px rgba(192, 132, 245, 0.4); }
+  }
+
+  .orb-label {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.85rem;
+    font-weight: 300;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--blush);
+    margin-top: 6px;
+    display: block;
+  }
+
+  .orb-ring {
+    position: absolute;
+    border-radius: 50%;
+    border: 1px solid rgba(192, 132, 245, 0.2);
+    animation: spin-slow linear infinite;
+  }
+
+  .orb-ring-1 {
+    width: 380px; height: 380px;
+    top: -30px; left: -30px;
+    animation-duration: 20s;
+    border-style: dashed;
+  }
+  .orb-ring-2 {
+    width: 440px; height: 440px;
+    top: -60px; left: -60px;
+    animation-duration: 30s;
+    animation-direction: reverse;
+    border-color: rgba(212, 168, 67, 0.12);
+  }
+  .orb-ring-3 {
+    width: 500px; height: 500px;
+    top: -90px; left: -90px;
+    animation-duration: 45s;
+    border-color: rgba(192, 132, 245, 0.08);
+  }
+
+  @keyframes spin-slow {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+
+  /* DOTTED SEPARATOR */
+  .dotted-line {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: repeating-linear-gradient(90deg,
+      rgba(192, 132, 245, 0.3) 0px,
+      rgba(192, 132, 245, 0.3) 4px,
+      transparent 4px,
+      transparent 12px
+    );
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  /* SCROLL INDICATOR */
+  .scroll-hint {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 3;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    color: rgba(255,255,255,0.3);
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    animation: bounce-hint 2s ease-in-out infinite;
+  }
+
+  .scroll-hint .line {
+    width: 1px;
+    height: 40px;
+    background: linear-gradient(to bottom, rgba(192,132,245,0.6), transparent);
+  }
+
+  @keyframes bounce-hint {
+    0%, 100% { opacity: 0.4; transform: translateX(-50%) translateY(0); }
+    50% { opacity: 1; transform: translateX(-50%) translateY(6px); }
+  }
+
+  /* SECTIONS */
+  section {
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ABOUT */
+  .section-about {
+    padding: 120px 48px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+    border-top: 1px solid rgba(192, 132, 245, 0.1);
+  }
+
+  .about-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 20px;
+    border: 1px solid rgba(212, 168, 67, 0.4);
+    border-radius: 100px;
+    background: rgba(212, 168, 67, 0.08);
+    margin-bottom: 28px;
+  }
+
+  .about-badge-dot {
+    width: 6px; height: 6px;
+    background: var(--gold);
+    border-radius: 50%;
+    box-shadow: 0 0 8px var(--gold);
+  }
+
+  .about-badge span {
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.2rem, 4vw, 3.5rem);
+    font-weight: 700;
+    line-height: 1.1;
+    color: var(--white);
+    margin-bottom: 24px;
+  }
+
+  .section-title em {
+    font-style: italic;
+    color: var(--lavender);
+  }
+
+  .section-body {
+    font-size: 0.95rem;
+    line-height: 1.8;
+    color: rgba(255,255,255,0.6);
+    margin-bottom: 16px;
+  }
+
+  .about-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-top: 40px;
+    padding-top: 40px;
+    border-top: 1px solid rgba(192, 132, 245, 0.15);
+  }
+
+  .stat {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .stat-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5rem;
+    font-weight: 900;
+    color: var(--lavender);
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.4);
+  }
+
+  .about-visual {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .about-card {
+    width: 100%;
+    max-width: 400px;
+    background: linear-gradient(135deg,
+      rgba(61, 26, 110, 0.6) 0%,
+      rgba(26, 10, 46, 0.8) 100%
+    );
+    border: 1px solid rgba(192, 132, 245, 0.2);
+    border-radius: 24px;
+    padding: 48px 40px;
+    backdrop-filter: blur(20px);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .about-card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle at center, rgba(192,132,245,0.06) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  .instructor-avatar {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--amethyst), var(--violet));
+    margin: 0 auto 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5rem;
+    font-weight: 700;
+    font-style: italic;
+    color: var(--lavender);
+    border: 2px solid rgba(192, 132, 245, 0.4);
+    box-shadow: 0 0 40px rgba(123, 63, 160, 0.3);
+  }
+
+  .instructor-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 4px;
+  }
+
+  .instructor-role {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.9rem;
+    font-style: italic;
+    color: var(--lavender);
+    letter-spacing: 0.08em;
+    margin-bottom: 24px;
+  }
+
+  .instructor-divider {
+    width: 40px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--lavender), transparent);
+    margin: 0 auto 20px;
+  }
+
+  .instructor-quote {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.05rem;
+    font-style: italic;
+    font-weight: 300;
+    color: rgba(255,255,255,0.65);
+    line-height: 1.6;
+  }
+
+  /* SERVICES */
+  .section-services {
+    padding: 120px 48px;
+    border-top: 1px solid rgba(192, 132, 245, 0.1);
+  }
+
+  .services-header {
+    text-align: center;
+    margin-bottom: 72px;
+  }
+
+  .section-eyebrow {
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+  }
+
+  .section-eyebrow::before,
+  .section-eyebrow::after {
+    content: '';
+    display: block;
+    width: 40px;
+    height: 1px;
+    background: var(--gold);
+    opacity: 0.5;
+  }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+
+  .service-card {
+    padding: 40px 32px;
+    background: linear-gradient(135deg,
+      rgba(61, 26, 110, 0.4) 0%,
+      rgba(26, 10, 46, 0.6) 100%
+    );
+    border: 1px solid rgba(192, 132, 245, 0.15);
+    border-radius: 20px;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
+    backdrop-filter: blur(10px);
+  }
+
+  .service-card:hover {
+    transform: translateY(-8px);
+    border-color: rgba(192, 132, 245, 0.4);
+    box-shadow: 0 24px 60px rgba(123, 63, 160, 0.25);
+  }
+
+  .service-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--violet), var(--lavender), var(--gold));
+    opacity: 0;
+    transition: opacity 0.4s ease;
+  }
+
+  .service-card:hover::after { opacity: 1; }
+
+  .service-icon {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    display: block;
+  }
+
+  .service-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 12px;
+    line-height: 1.2;
+  }
+
+  .service-desc {
+    font-size: 0.88rem;
+    line-height: 1.7;
+    color: rgba(255,255,255,0.5);
+  }
+
+  .service-tag {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 4px 14px;
+    border: 1px solid rgba(192, 132, 245, 0.3);
+    border-radius: 100px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--lavender);
+    background: rgba(192, 132, 245, 0.08);
+  }
+
+  /* COURSES */
+  .courses-section {
+    margin-top: 72px;
+    padding-top: 72px;
+    border-top: 1px solid rgba(192, 132, 245, 0.12);
+  }
+
+  .courses-header {
+    text-align: center;
+    margin-bottom: 48px;
+  }
+
+  .courses-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 16px;
+  }
+
+  .course-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 18px 24px;
+    background: linear-gradient(135deg,
+      rgba(61, 26, 110, 0.35) 0%,
+      rgba(26, 10, 46, 0.5) 100%
+    );
+    border: 1px solid rgba(192, 132, 245, 0.13);
+    border-radius: 14px;
+    backdrop-filter: blur(8px);
+    transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .course-item::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 3px;
+    background: linear-gradient(to bottom, var(--lavender), var(--gold));
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .course-item:hover {
+    transform: translateY(-4px);
+    border-color: rgba(192, 132, 245, 0.35);
+    box-shadow: 0 12px 40px rgba(123, 63, 160, 0.2);
+  }
+
+  .course-item:hover::before { opacity: 1; }
+
+  .course-dot {
+    width: 8px; height: 8px;
+    min-width: 8px;
+    border-radius: 50%;
+    background: var(--lavender);
+    box-shadow: 0 0 10px rgba(192, 132, 245, 0.6);
+  }
+
+  .course-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.05rem;
+    font-weight: 400;
+    color: rgba(255,255,255,0.82);
+    letter-spacing: 0.03em;
+    line-height: 1.3;
+  }
+
+  .course-badge {
+    margin-left: auto;
+    padding: 3px 10px;
+    border: 1px solid rgba(212, 168, 67, 0.3);
+    border-radius: 100px;
+    font-size: 0.62rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gold);
+    background: rgba(212, 168, 67, 0.07);
+    white-space: nowrap;
+  }
+
+  /* TESTIMONIALS */
+  .section-testimonials {
+    padding: 120px 48px;
+    border-top: 1px solid rgba(192, 132, 245, 0.1);
+    text-align: center;
+  }
+
+  .testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-top: 60px;
+  }
+
+  .testimonial-card {
+    padding: 36px 28px;
+    background: rgba(61, 26, 110, 0.25);
+    border: 1px solid rgba(192, 132, 245, 0.12);
+    border-radius: 16px;
+    text-align: left;
+    transition: transform 0.3s ease;
+  }
+
+  .testimonial-card:hover { transform: translateY(-4px); }
+
+  .testimonial-stars {
+    color: var(--gold);
+    font-size: 0.9rem;
+    letter-spacing: 3px;
+    margin-bottom: 16px;
+  }
+
+  .testimonial-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.05rem;
+    font-style: italic;
+    line-height: 1.65;
+    color: rgba(255,255,255,0.7);
+    margin-bottom: 24px;
+  }
+
+  .testimonial-author {
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--lavender);
+  }
+
+  /* ABOUT THETAHEALING */
+  .about-theta-content {
+    max-width: 820px;
+    margin: 48px auto 0;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .about-theta-body {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.15rem;
+    font-weight: 300;
+    line-height: 1.85;
+    color: rgba(255,255,255,0.7);
+    text-align: center;
+  }
+
+  .about-theta-body strong {
+    color: var(--lavender);
+    font-weight: 400;
+  }
+
+  .about-theta-quote {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.35rem;
+    font-weight: 700;
+    font-style: italic;
+    color: var(--lavender);
+    text-align: center;
+    margin-top: 16px;
+    padding-top: 32px;
+    border-top: 1px solid rgba(192, 132, 245, 0.2);
+    letter-spacing: 0.02em;
+  }
+
+  /* CTA SECTION */
+  .section-cta {
+    padding: 120px 48px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cta-glow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 600px;
+    height: 400px;
+    background: radial-gradient(ellipse, rgba(123, 63, 160, 0.3) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .cta-content {
+    position: relative;
+    z-index: 1;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .cta-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 900;
+    line-height: 1.05;
+    color: var(--white);
+    margin-bottom: 20px;
+  }
+
+  .cta-title em {
+    font-style: italic;
+    color: var(--lavender);
+  }
+
+  .cta-subtitle {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    font-style: italic;
+    color: rgba(255,255,255,0.55);
+    margin-bottom: 44px;
+    line-height: 1.6;
+  }
+
+  /* FOOTER */
+  footer {
+    padding: 48px;
+    border-top: 1px solid rgba(192, 132, 245, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    z-index: 1;
+  }
+
+  .footer-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem;
+    font-weight: 300;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--lavender);
+  }
+
+  .footer-copy {
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.25);
+    letter-spacing: 0.05em;
+  }
+
+  .footer-social {
+    display: flex;
+    gap: 16px;
+  }
+
+  .social-link {
+    width: 36px; height: 36px;
+    border: 1px solid rgba(192, 132, 245, 0.25);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--lavender);
+    text-decoration: none;
+    font-size: 0.8rem;
+    transition: all 0.3s;
+  }
+
+  .social-link:hover {
+    background: rgba(192, 132, 245, 0.15);
+    border-color: var(--lavender);
+    transform: translateY(-2px);
+  }
+
+  /* REVEAL ANIMATIONS */
+  .reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+  .reveal-delay-4 { transition-delay: 0.4s; }
+  .reveal-delay-5 { transition-delay: 0.5s; }
+
+  /* MAX WIDTH */
+  .container { max-width: 1280px; margin: 0 auto; }
+
+  /* PARTICLES */
+  .particle {
+    position: fixed;
+    pointer-events: none;
+    border-radius: 50%;
+    z-index: 0;
+    animation: particle-float linear infinite;
+    opacity: 0;
+  }
+
+  @keyframes particle-float {
+    0% { transform: translateY(100vh) scale(0); opacity: 0; }
+    10% { opacity: 0.4; }
+    90% { opacity: 0.2; }
+    100% { transform: translateY(-10vh) scale(1); opacity: 0; }
+  }
+</style>
+</head>
+<body>
+
+<canvas id="bg-canvas"></canvas>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Entrena Tu Espíritu</div>
+  <ul class="nav-links">
+    <li><a href="#sobre">Sobre mí</a></li>
+    <li><a href="#sesiones">Sesiones</a></li>
+    <li><a href="#testimonios">Acerca de</a></li>
+    <li><a href="#contacto" class="nav-cta">Agendar</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-texture"></div>
+  <div class="hero-botanical"></div>
+
+  <div class="hero-content container">
+    <div class="hero-eyebrow">Instructora Certificada ThetaHealing®</div>
+    <h1 class="hero-title">
+      Entrena<br>
+      <em>Tu Espíritu</em>
+    </h1>
+    <p class="hero-subtitle">Sana. Transforma. Florece.</p>
+    <p class="hero-desc">
+      Descubre el poder de reprogramar tus creencias limitantes y conectar con tu esencia más profunda. ThetaHealing® es la llave que abre la puerta a la vida que mereces.
+    </p>
+    <div class="hero-actions">
+      <a href="https://linktr.ee/Anapaolahidalgo?utm_source=ig&utm_medium=social&utm_content=link_in_bio&fbclid=PAb21jcASgRhNleHRuA2FlbQIxMQBzcnRjBmFwcF9pZA81NjcwNjczNDMzNTI0MjcAAaf_TTWnXXsYWc6QVD8CY068nEprZOp7qPm6aFSxEXRbxBqjw-V5FKDdHp_HBg_aem_OvdRZaEFc5fTeARNcEQm4g" target="_blank" class="btn-primary"><span>Agendar Sesión</span></a>
+      <a href="#sesiones" class="btn-ghost">Conoce más</a>
+    </div>
+  </div>
+
+  <!-- Floating orb -->
+  <div class="hero-visual">
+    <div class="orb-container">
+      <div class="orb-ring orb-ring-1"></div>
+      <div class="orb-ring orb-ring-2"></div>
+      <div class="orb-ring orb-ring-3"></div>
+      <div class="orb-main">
+        <div class="orb-inner-text">
+          <span class="orb-theta">Θ</span>
+          <span class="orb-label">ThetaHealing</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="scroll-hint">
+    <span>Descubrir</span>
+    <div class="line"></div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="section-about" id="sobre">
+  <div class="about-content">
+    <div class="about-badge reveal">
+      <div class="about-badge-dot"></div>
+      <span>Ana Paola – Tu guía espiritual</span>
+    </div>
+    <h2 class="section-title reveal reveal-delay-1">
+      Una transformación <em>real</em> desde adentro
+    </h2>
+    <p class="section-body reveal reveal-delay-2">
+      Hola, soy Ana Pao. Comencé mi camino en la sanación en el <strong>2004</strong>, a mis 24 años de edad, y llevo <strong>22 años</strong> aprendiendo y creciendo en esta hermosa disciplina.
+    </p>
+    <p class="section-body reveal reveal-delay-3">
+      Hoy soy <strong>Maestra y Sanadora de Reiki</strong> en sus vertientes Karuna, Japonés, Egipcio y Atlante, e integrante de la <strong>Asociación de Reikistas México–España–Japón</strong>. También soy <strong>Maestra de ThetaHealing® USA Montana</strong> desde 2015, con maestría en la técnica.
+    </p>
+    <p class="section-body reveal reveal-delay-4">
+      Cuento con certificación como <strong>Practicante de Acupuntura</strong> por la Asociación Médica de Acupunturistas del Sureste A.C., y soy dueña de la marca registrada <strong>Entrena Tu Espíritu</strong>, que imparte talleres como <em>El Guerrero Interior</em> y trabaja con la vibración y sanación de las <em>8 Heridas del Niño Interior</em>.
+    </p>
+    <p class="section-body reveal reveal-delay-5">
+      Actualmente imparto clases y terapias tanto en línea como presenciales, atendiendo a clientes en diversos países de <strong>Latinoamérica, Asia y Europa</strong>.
+    </p>
+    <div class="about-stats reveal reveal-delay-4">
+      <div class="stat">
+        <span class="stat-number">500+</span>
+        <span class="stat-label">Sesiones realizadas</span>
+      </div>
+      <div class="stat">
+        <span class="stat-number">22+</span>
+        <span class="stat-label">Años de experiencia</span>
+      </div>
+      <div class="stat">
+        <span class="stat-number">100%</span>
+        <span class="stat-label">Certificada THInK</span>
+      </div>
+      <div class="stat">
+        <span class="stat-number">∞</span>
+        <span class="stat-label">Amor incondicional</span>
+      </div>
+    </div>
+  </div>
+  <div class="about-visual reveal reveal-delay-2">
+    <div class="about-card">
+      <div class="instructor-avatar">
+        <img src="ana paola.jpeg" alt="Ana Paola" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">
+      </div>
+      <div class="instructor-name">Ana Paola</div>
+      <div class="instructor-role">Instructora Certificada ThetaHealing®</div>
+      <div class="instructor-divider"></div>
+      <p class="instructor-quote">
+        "Tu subconsciente guarda las respuestas. Yo te ayudo a encontrarlas."
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="section-services" id="sesiones">
+  <div class="services-header">
+    <div class="section-eyebrow">Lo que ofrezco</div>
+    <h2 class="section-title reveal">
+      Sesiones diseñadas<br>para tu <em>evolución</em>
+    </h2>
+  </div>
+  <div class="services-grid">
+    <div class="service-card reveal reveal-delay-1">
+      <span class="service-icon">🌿</span>
+      <h3 class="service-name">Sesión Individual</h3>
+      <p class="service-desc">Una hora de sanación profunda, trabajo en creencias limitantes y conexión con el Creador. Personalizada para tu situación específica.</p>
+      <span class="service-tag">60 min · Online / Presencial</span>
+    </div>
+    <div class="service-card reveal reveal-delay-2">
+      <span class="service-icon">✨</span>
+      <h3 class="service-name">Curso ThetaHealing®</h3>
+      <p class="service-desc">Aprende la técnica completa. Desde ADN básico hasta niveles avanzados. Conviértete en tu propio sanador y ayuda a otros.</p>
+      <span class="service-tag">Certificación oficial · THInK</span>
+    </div>
+    <div class="service-card reveal reveal-delay-3">
+      <span class="service-icon">🦋</span>
+      <h3 class="service-name">Taller Grupal</h3>
+      <p class="service-desc">Experiencias colectivas de expansión consciente. Meditaciones guiadas, trabajo energético grupal y comunidad de crecimiento.</p>
+      <span class="service-tag">Grupos pequeños · Mensual</span>
+    </div>
+  </div>
+
+  <!-- COURSES LIST -->
+  <div class="courses-section">
+    <div class="courses-header">
+      <div class="section-eyebrow">Certificaciones disponibles</div>
+      <h3 class="section-title reveal" style="font-size: clamp(1.6rem, 3vw, 2.4rem);">
+        Cursos <em>ThetaHealing®</em>
+      </h3>
+    </div>
+    <div class="courses-grid">
+      <div class="course-item reveal reveal-delay-1">
+        <div class="course-dot"></div>
+        <span class="course-name">ADN Básico</span>
+        <span class="course-badge">Fundación</span>
+      </div>
+      <div class="course-item reveal reveal-delay-2">
+        <div class="course-dot"></div>
+        <span class="course-name">ADN Avanzado</span>
+        <span class="course-badge">Nivel 2</span>
+      </div>
+      <div class="course-item reveal reveal-delay-3">
+        <div class="course-dot"></div>
+        <span class="course-name">Dios y Yo</span>
+        <span class="course-badge">Espiritual</span>
+      </div>
+      <div class="course-item reveal reveal-delay-1">
+        <div class="course-dot"></div>
+        <span class="course-name">Indagación</span>
+        <span class="course-badge">Técnica</span>
+      </div>
+      <div class="course-item reveal reveal-delay-2">
+        <div class="course-dot"></div>
+        <span class="course-name">Tu Pareja y Tú</span>
+        <span class="course-badge">Relaciones</span>
+      </div>
+      <div class="course-item reveal reveal-delay-3">
+        <div class="course-dot"></div>
+        <span class="course-name">Manifestación y Abundancia</span>
+        <span class="course-badge">Prosperidad</span>
+      </div>
+      <div class="course-item reveal reveal-delay-1">
+        <div class="course-dot"></div>
+        <span class="course-name">Liberación de Peso</span>
+        <span class="course-badge">Bienestar</span>
+      </div>
+      <div class="course-item reveal reveal-delay-2">
+        <div class="course-dot"></div>
+        <span class="course-name">Pareja de Alma</span>
+        <span class="course-badge">Relaciones</span>
+      </div>
+      <div class="course-item reveal reveal-delay-3">
+        <div class="course-dot"></div>
+        <span class="course-name">La Tierra y Yo</span>
+        <span class="course-badge">Conexión</span>
+      </div>
+      <div class="course-item reveal reveal-delay-1">
+        <div class="course-dot"></div>
+        <span class="course-name">El Círculo Cercano</span>
+        <span class="course-badge">Familia</span>
+      </div>
+      <div class="course-item reveal reveal-delay-2">
+        <div class="course-dot"></div>
+        <span class="course-name">Relaciones con el Mundo</span>
+        <span class="course-badge">Social</span>
+      </div>
+      <div class="course-item reveal reveal-delay-3">
+        <div class="course-dot"></div>
+        <span class="course-name">Plantas y Animales</span>
+        <span class="course-badge">Naturaleza</span>
+      </div>
+      <div class="course-item reveal reveal-delay-1">
+        <div class="course-dot"></div>
+        <span class="course-name">Anatomía Intuitiva</span>
+        <span class="course-badge">Sanación</span>
+      </div>
+      <div class="course-item reveal reveal-delay-2">
+        <div class="course-dot"></div>
+        <span class="course-name">Niño Arcoíris</span>
+        <span class="course-badge">Niños</span>
+      </div>
+      <div class="course-item reveal reveal-delay-3">
+        <div class="course-dot"></div>
+        <span class="course-name">Introducción a ThetaHealing®</span>
+        <span class="course-badge">Inicio</span>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- ABOUT THETAHEALING -->
+<section class="section-testimonials" id="testimonios">
+  <div class="section-eyebrow">Acerca de</div>
+  <h2 class="section-title reveal">¿Qué es <em>ThetaHealing®</em>?</h2>
+  <div class="about-theta-content">
+    <p class="about-theta-body reveal reveal-delay-1">
+      ThetaHealing® is a world-renowned meditation technique and spiritual philosophy founded by Vianna Stibal that has been transforming lives in more than <strong>180 countries</strong> for over <strong>30 years</strong>.
+    </p>
+    <p class="about-theta-body reveal reveal-delay-2">
+      Through a focused meditative state, you learn to connect with the Creator of All That Is and identify the beliefs held within the subconscious mind. As limiting beliefs are released and replaced, greater clarity, peace, balance, and purpose can be experienced in everyday life.
+    </p>
+    <p class="about-theta-body reveal reveal-delay-3">
+      From this connection comes insight, healing, inner growth, and the ability to create meaningful change naturally. ThetaHealing® is designed to empower you mentally, emotionally, spiritually, and energetically—helping you awaken to your highest potential and live with greater joy.
+    </p>
+    <p class="about-theta-quote reveal reveal-delay-4">
+      Discover your best life through the pure essence of love.
+    </p>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="section-cta" id="contacto">
+  <div class="cta-glow"></div>
+  <div class="cta-content">
+    <div class="section-eyebrow">Tu momento es ahora</div>
+    <h2 class="cta-title reveal">
+      ¿Lista para comenzar<br>tu <em>transformación</em>?
+    </h2>
+    <p class="cta-subtitle reveal reveal-delay-1">
+      Una conversación puede cambiar tu vida. Agenda tu primera sesión y descubre lo que ThetaHealing® puede hacer por ti.
+    </p>
+    <div class="reveal reveal-delay-2">
+      <a href="https://linktr.ee/Anapaolahidalgo?utm_source=ig&utm_medium=social&utm_content=link_in_bio&fbclid=PAb21jcASgRhNleHRuA2FlbQIxMQBzcnRjBmFwcF9pZA81NjcwNjczNDMzNTI0MjcAAaf_TTWnXXsYWc6QVD8CY068nEprZOp7qPm6aFSxEXRbxBqjw-V5FKDdHp_HBg_aem_OvdRZaEFc5fTeARNcEQm4g" target="_blank" class="btn-primary">
+        <span>Agendar</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Entrena Tu Espíritu</div>
+  <span class="footer-copy">© 2026 Ana Paola · ThetaHealing® Instructor Certificada</span>
+  <div class="footer-social">
+    <a href="#" class="social-link">ig</a>
+    <a href="#" class="social-link">fb</a>
+    <a href="#" class="social-link">wa</a>
+  </div>
+</footer>
+
+<script>
+
+// ---- CANVAS PARTICLES ----
+const canvas = document.getElementById('bg-canvas');
+const ctx = canvas.getContext('2d');
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+window.addEventListener('resize', () => {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+});
+
+const stars = [];
+for (let i = 0; i < 160; i++) {
+  stars.push({
+    x: Math.random() * canvas.width,
+    y: Math.random() * canvas.height,
+    r: Math.random() * 1.5 + 0.3,
+    alpha: Math.random(),
+    speed: Math.random() * 0.003 + 0.001,
+    phase: Math.random() * Math.PI * 2
+  });
+}
+
+// Nebula orbs
+const nebulae = [
+  { x: 0.75, y: 0.3, r: 300, color: 'rgba(123,63,160,' },
+  { x: 0.15, y: 0.7, r: 220, color: 'rgba(61,26,110,' },
+  { x: 0.5, y: 0.9, r: 180, color: 'rgba(192,132,245,' },
+];
+
+let t = 0;
+function drawCanvas() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  t += 0.005;
+
+  // Stars
+  stars.forEach(s => {
+    const a = 0.3 + 0.5 * Math.sin(s.phase + t * s.speed * 60);
+    ctx.beginPath();
+    ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(255,255,255,${a * 0.7})`;
+    ctx.fill();
+  });
+
+  // Nebulae
+  nebulae.forEach((n, i) => {
+    const pulse = 1 + 0.05 * Math.sin(t + i * 2);
+    const grd = ctx.createRadialGradient(
+      n.x * canvas.width, n.y * canvas.height, 0,
+      n.x * canvas.width, n.y * canvas.height, n.r * pulse
+    );
+    grd.addColorStop(0, n.color + '0.08)');
+    grd.addColorStop(1, n.color + '0)');
+    ctx.fillStyle = grd;
+    ctx.beginPath();
+    ctx.arc(n.x * canvas.width, n.y * canvas.height, n.r * pulse, 0, Math.PI * 2);
+    ctx.fill();
+  });
+
+  requestAnimationFrame(drawCanvas);
+}
+drawCanvas();
+
+// ---- SCROLL REVEAL ----
+const reveals = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) e.target.classList.add('visible');
+  });
+}, { threshold: 0.15 });
+reveals.forEach(el => observer.observe(el));
+
+// ---- NAV SCROLL EFFECT ----
+window.addEventListener('scroll', () => {
+  const nav = document.querySelector('nav');
+  if (window.scrollY > 60) {
+    nav.style.background = 'rgba(26,10,46,0.85)';
+  } else {
+    nav.style.background = 'rgba(26,10,46,0.4)';
+  }
+});
+
+// ---- FLOATING PARTICLES ----
+function spawnParticle() {
+  const p = document.createElement('div');
+  p.className = 'particle';
+  const size = Math.random() * 4 + 2;
+  p.style.cssText = `
+    width:${size}px; height:${size}px;
+    left:${Math.random()*100}%;
+    background: ${Math.random() > 0.5 ? 'rgba(192,132,245,0.6)' : 'rgba(212,168,67,0.5)'};
+    animation-duration: ${Math.random()*10+8}s;
+    animation-delay: ${Math.random()*5}s;
+  `;
+  document.body.appendChild(p);
+  setTimeout(() => p.remove(), 18000);
+}
+setInterval(spawnParticle, 800);
+
+</script>
+</body>
+</html>
